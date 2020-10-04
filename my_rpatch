@@ -1,0 +1,19 @@
+*** Source/Modules/r.cxx.orig	2017-10-02 13:55:37.000008234 +0100
+--- Source/Modules/r.cxx	2017-10-02 14:00:46.302784608 +0100
+***************
+*** 2097,2103 ****
+        Printf(tmp, "Rf_protect(r_ans);\n");
+  
+      Printf(tmp, "Rf_protect(R_OutputValues = Rf_allocVector(VECSXP,%d));\nr_nprotect += %d;\n",
+! 	   numOutArgs + !isVoidReturnType,
+  	   isVoidReturnType ? 1 : 2);
+  
+      if(!isVoidReturnType)
+--- 2097,2103 ----
+        Printf(tmp, "Rf_protect(r_ans);\n");
+  
+      Printf(tmp, "Rf_protect(R_OutputValues = Rf_allocVector(VECSXP,%d));\nr_nprotect += %d;\n",
+! 	   numOutArgs + 1, /*numOutArgs is the max. index of the argument in the list, so the dimension is 1 more!*/
+  	   isVoidReturnType ? 1 : 2);
+  
+      if(!isVoidReturnType)

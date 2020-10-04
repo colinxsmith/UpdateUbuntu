@@ -1,0 +1,35 @@
+CC=gcc
+export CC
+JAVA=`find /usr/lib -name jni.h -print|sed "s|/jni.h||"`
+export JAVA
+PATH=/home/colin/monotest/bin:$PATH:/home/colin/bin
+LD_LIBRARY_PATH=`pwd`
+export LD_LIBRARY_PATH PATH
+#Get backup.zip somehow then unload and change files for 64 bit
+unzip -o -a backup
+patch -R < int*patch
+patch < linux64patch
+#Make the licence stuff
+gcc -o ../bin/future future.c krypton.c
+gcc -o ../bin/hostlist hostlist.c
+gcc -o ../bin/validas validas.c krypton.c guniqid.c -lm
+#Make definitions of constants
+gcc -o ../bin/genconst genconst.c -lm
+#Make  libsafeqp.so
+make -f makelinux constant.c
+#make -f makelinux OMP= LIBOMP=
+make -f makelinux
+make -f makepythoncl VER=2.7
+mv ConvexUtility.java ConvexUtility.javat
+mv Hedge.java Hedge.javat
+make -f makejavacl SWIG=/home/colin/SWIGcvs/SWIG/swig JAVA=$JAVA
+mv ConvexUtility.javat ConvexUtility.java
+mv Hedge.javat Hedge.java
+#mkdir CURVE
+#cd CURVE
+#cp ../makeLINUXall makefile 
+#make HOME=$HOME  NAME=`uname -i` JAVA=$JAVA
+#make clean
+#cd ../
+make -f makeperlcl
+make -f  makecsharpcl
