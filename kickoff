@@ -34,6 +34,6 @@ mv Hedge.javat Hedge.java
 make -f makeperlcl
 make -f  makecsharpcl
 gcc -c myreadfiddle.c
-gcc -c guniqid.o
+gcc -c guniqid.c
 g++ -o /home/colin/bin/paskey -I./ -DPAS -DPASKeyMake myreadfiddle.o paskey.cpp validate.cpp guniqid.o -lstdc++
 rm -rf myreadfiddle.o guniqid.o
